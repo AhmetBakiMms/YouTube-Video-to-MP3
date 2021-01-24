@@ -145,11 +145,7 @@ if (isset($_GET["id"]))
     $vid = array();
     foreach ($streamin_data_json["streamingData"]["adaptiveFormats"] as $stream)
     {
-        if (isset($stream["signatureCipher"]))
-        {
-            parse_str($stream["signatureCipher"], $dturl);
-            $stream['url'] = $dturl['url'] . '&sig=' . sig($dturl['s']);
-        }
+   
 
         if (preg_match('/audio/', $stream['mimeType']))
         {
@@ -160,15 +156,7 @@ if (isset($_GET["id"]))
             );
             array_push($aud, $values);
         }
-        if (preg_match('/video/', $stream['mimeType']))
-        {
-            $url = $stream['url'];
-            $values = array(
-                'quality' => quality($stream['itag']) ,
-                'url' => $url,
-            );
-            array_push($vid, $values);
-        }
+
     };
 
     $json['audio'] = $aud;
